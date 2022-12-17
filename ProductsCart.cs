@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopSystem.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace ShopSystem
         {
             get
             {
-                return this.Sum(x => GetProduct(x.productId).Price * x.copies);
+                return this.Sum(x => new ShopProductsService().Read(x.productId).Price * x.copies);
             }
         }
     }

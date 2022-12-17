@@ -10,6 +10,7 @@ namespace ShopSystem.Data
     {
         public static List<Product> ShopProducts { get; set; }
         public static List<Order> OrdersHistory { get; set; }
+        public static User User { get; set; }
 
         static DBContext()
         {
@@ -22,6 +23,7 @@ namespace ShopSystem.Data
                 new Product(new ProductDTO { Name = "M1 «Абрамс»", Price = 23, Description = "M1 «Абрамс» є добре озброєною, броньованою, мобільною бойовою машиною, розрахованою на ведення бойових дій у різних умовах сучасних війн та збройних конфліктів", Copies = 2}),
             });
             OrdersHistory = new List<Order>();
+            User = null;
         }
     }
 }

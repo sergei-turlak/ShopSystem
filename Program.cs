@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopSystem.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace ShopSystem
     {
         static void Main(string[] args)
         {
+            GeneralController UIController = new GeneralController();
+            UIController.Run();
         }
     }
 }
