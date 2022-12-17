@@ -29,11 +29,17 @@ namespace ShopSystem.Services
             oldList[oldList.IndexOf(oldList.Find(x => x.Id == productId))] = updated;
             DBContext.ShopProducts = oldList;
         }
+
         public void Delete(int productId)
         {
             var oldList = ReadAll();
             oldList.Remove(oldList.Find(x => x.Id == productId));
             DBContext.ShopProducts = oldList;
+        }
+
+        public bool Contains(int productId)
+        {
+            return ReadAll().Contains(Read(productId));
         }
     }
 }

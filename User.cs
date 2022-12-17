@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ShopSystem.Data;
+using ShopSystem.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +31,8 @@ namespace ShopSystem
 
         public void AddProductToCart(int productId, int copiesNumber)
         {
-            if (!Contain(productId)) throw new Exception("Товару з таким індексом немає");
+            ShopProductsService service = new ShopProductsService();
+            if (!service.Contains(productId)) throw new Exception("Товару з таким індексом немає");
             ProductCart.Add((productId, copiesNumber));
         }
 
@@ -38,16 +41,20 @@ namespace ShopSystem
             if (ProductCart.Count == 0) throw new Exception("Кошик товарів порожній!");
             if (ProductCart.TotalPrice > Balance) throw new Exception("На рахунку бракує балансу здійснити купівлю товарів з кошику!");
 
+            ShopProductsService service = new ShopProductsService();
             foreach(var element in ProductCart)
             {
-                Product product = GetProduct(element.productId);
+                Product product = service.Read(element.productId);
                 if (element.copies > product.Copies) throw new Exception("У нас немає такої кількості копій цього товару!");
                 product.Copies -= element.copies;
                 Balance -= product.Price * element.copies;
-                Update(product);
+                service.Update(element.productId, product);
             }
 
-            History.AddOrder(this, ProductCart);
+            Order newOrder = new Order(new OrderDTO { UserId = Id, Products = ProductCart });
+            OrdersHistoryService service2 = new OrdersHistoryService();
+            service2.Create(newOrder);
+
             ProductCart.Clear();
         }
     }

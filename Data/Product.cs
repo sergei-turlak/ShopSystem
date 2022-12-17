@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopSystem.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,17 @@ namespace ShopSystem.Data
         public string Name { get; }
         public int Price { get; }
         public string Description { get; }
-        public int Copies { get; set; }
+        public int Copies
+        {
+            get => copies;
+            set
+            {
+                copies = value;
+                if (copies == 0)
+                    new ShopProductsService().Delete(Id);
+            }
+        }
+        private int copies;
 
         public Product(ProductDTO dto)
         {

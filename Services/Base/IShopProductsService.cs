@@ -13,5 +13,6 @@ namespace ShopSystem.Services.Base
         List<Product> ReadAll();
         void Update(int productId, Product updated);
         void Delete(int productId);
+        bool Contains(int productId);
     }
 }
