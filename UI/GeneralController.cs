@@ -15,7 +15,7 @@ namespace ShopSystem.UI
             UIs = new List<IUserInterface>
             {
                 new BalanceReplenishmentController(),
-
+                new ShowShopProductsController(),
             };
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.InputEncoding = System.Text.Encoding.Unicode;
@@ -29,7 +29,7 @@ namespace ShopSystem.UI
 
         private void Action()
         {
-            int option = int.Parse(Console.ReadLine());
+            int option = int.Parse((Console.ReadKey().KeyChar).ToString());
             Console.Clear();
             UIs[option - 1].Action();
         }
