@@ -43,8 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DBContext.cs" />
+    <Compile Include="Data\Order.cs" />
+    <Compile Include="Data\Product.cs" />
+    <Compile Include="ProductsCart.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Base\IOrdersHistoryService.cs" />
+    <Compile Include="Services\Base\IShopProductsService.cs" />
+    <Compile Include="Services\OrdersHistoryService.cs" />
+    <Compile Include="Services\OrdersHistoryServiceAsync.cs" />
+    <Compile Include="Services\ShopProductsService.cs" />
+    <Compile Include="Services\ShopProductsServiceAsync.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
