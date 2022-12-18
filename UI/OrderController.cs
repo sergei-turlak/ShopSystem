@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShopSystem.UI
 {
-    internal class ShowShopProductsController : IUserInterface
+    internal class OrderController : IUserInterface
     {
         public void Action()
         {
@@ -24,19 +24,25 @@ namespace ShopSystem.UI
                 Console.WriteLine("*\t*\t*\t*\t*\t*\t*\t*\t*\t*\t*");
                 Console.WriteLine();
             }
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Додати до кошика певний товар - натисність 'Y/y'");
             Console.WriteLine("До меню - будь-яка клавіша");
+            Console.ForegroundColor = ConsoleColor.White;
             if (Console.ReadKey().Key != ConsoleKey.Y) return;
-            Console.WriteLine("Укажіть номер товару (1,2,3...):");
+            Console.WriteLine("\nУкажіть номер товару (1,2,3...):");
             int number = int.Parse((Console.ReadKey().KeyChar.ToString()));
-
-            DBContext.User.AddProductToCart()
+            Console.WriteLine($"\nЯку кількість екземплярів {products[number-1].Name} додати до кошика?");
+            int copies = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Додати до кошика {products[number-1].Name} у кількості {copies} екземплярів вартістю {products[number-1].Price} * {copies} = {products[number - 1].Price* copies} грн?!");
+            Console.WriteLine("Підтвердити - натисність 'Y/y'");
+            Console.WriteLine("Скасувати операцію - будь-яка клавіша");
+            if (Console.ReadKey().Key != ConsoleKey.Y) return;
+            DBContext.User.AddProductToCart(products[number - 1].Id, copies);
         }
 
         public string Message()
         {
-            return "Показати товари в наявності";
+            return "Показати товари в наявності та замовити";
         }
     }
 }

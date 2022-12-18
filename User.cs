@@ -13,15 +13,14 @@ namespace ShopSystem
         public int Id { get; }
         public string Name { get; }
         public int Balance { get; private set; }
-
-        private ProductsCart ProductCart;
+        public ProductsCart ProductsCart { get; private set; }
 
         public User(UserDTO dto)
         {
             Id = new Random(Guid.NewGuid().GetHashCode()).Next(0, 1_000_000);
             Name = dto.Name;
             Balance = dto.Balance;
-            ProductCart = new ProductsCart();
+            ProductsCart = new ProductsCart();
         }
 
         public void ReplenishBalance(int value)
@@ -32,30 +31,48 @@ namespace ShopSystem
         public void AddProductToCart(int productId, int copiesNumber)
         {
             ShopProductsService service = new ShopProductsService();
+            if (copiesNumber == 0 || copiesNumber > service.Read(productId).Copies) throw new Exception("Немає такої кількості товару");
             if (!service.Contains(productId)) throw new Exception("Товару з таким індексом немає");
-            ProductCart.Add((productId, copiesNumber));
+
+            foreach (var element in ProductsCart)
+                if (element.productId == productId)
+                {
+                    ProductsCart[ProductsCart.IndexOf(element)] = (productId, element.copies + copiesNumber);
+                    return;
+                }
+
+            ProductsCart.Add((productId, copiesNumber));
         }
 
         public void BuyProductsInCart()
         {
-            if (ProductCart.Count == 0) throw new Exception("Кошик товарів порожній!");
-            if (ProductCart.TotalPrice > Balance) throw new Exception("На рахунку бракує балансу здійснити купівлю товарів з кошику!");
+            if (ProductsCart.Count == 0) throw new Exception("Кошик товарів порожній!");
+            if (ProductsCart.TotalPrice > Balance) throw new Exception("На рахунку бракує балансу здійснити купівлю товарів з кошику!");
 
             ShopProductsService service = new ShopProductsService();
-            foreach(var element in ProductCart)
+            foreach (var element in ProductsCart)
             {
                 Product product = service.Read(element.productId);
-                if (element.copies > product.Copies) throw new Exception("У нас немає такої кількості копій цього товару!");
+                if (element.copies > product.Copies)
+                {
+                    ProductsCart.Remove(element);
+                    throw new Exception("У нас немає такої кількості копій цього товару!");
+                }
+            }
+
+            foreach(var element in ProductsCart)
+            {
+                Product product = service.Read(element.productId);
                 product.Copies -= element.copies;
                 Balance -= product.Price * element.copies;
                 service.Update(element.productId, product);
             }
 
-            Order newOrder = new Order(new OrderDTO { UserId = Id, Products = ProductCart });
+            Order newOrder = new Order(new OrderDTO { UserId = Id, Products = ProductsCart });
             OrdersHistoryService service2 = new OrdersHistoryService();
             service2.Create(newOrder);
 
-            ProductCart.Clear();
+            ProductsCart.Clear();
         }
     }
 

@@ -55,11 +55,14 @@
     <Compile Include="Services\OrdersHistoryServiceAsync.cs" />
     <Compile Include="Services\ShopProductsService.cs" />
     <Compile Include="Services\ShopProductsServiceAsync.cs" />
-    <Compile Include="UI\BalanceReplenishmentController.cs" />
-    <Compile Include="UI\CreateUserController.cs" />
+    <Compile Include="UI\EscapeController.cs" />
+    <Compile Include="UI\HistoryController.cs" />
+    <Compile Include="UI\InfoController.cs" />
+    <Compile Include="UI\ReplenishmentController.cs" />
+    <Compile Include="UI\CartController.cs" />
     <Compile Include="UI\GeneralController.cs" />
     <Compile Include="UI\IUserInterface.cs" />
-    <Compile Include="UI\ShowShopProductsController.cs" />
+    <Compile Include="UI\OrderController.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

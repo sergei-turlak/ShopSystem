@@ -17,10 +17,13 @@ namespace ShopSystem.Data
         public Order(OrderDTO dto)
         {
             Id = new Random(Guid.NewGuid().GetHashCode()).Next(0, 1_000_000);
-            UserId = dto.UserId;
-            Products = dto.Products;
             TotalPrice = dto.Products.TotalPrice;
             Date = DateTime.Now;
+            UserId = dto.UserId;
+
+            Products = new ProductsCart();
+            foreach(var item in dto.Products)
+                Products.Add(item);
         }
     }
 

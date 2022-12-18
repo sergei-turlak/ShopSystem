@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShopSystem.UI
 {
-    internal class BalanceReplenishmentController : IUserInterface
+    internal class ReplenishmentController : IUserInterface
     {
         public void Action()
         {
