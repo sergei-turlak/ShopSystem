@@ -25,13 +25,14 @@ namespace ShopSystem
 
         public void ReplenishBalance(int value)
         {
+            if (value <= 0) throw new Exception("Не можливо поповнити рахунок на таку суму");
             Balance += value;
         }
 
         public void AddProductToCart(int productId, int copiesNumber)
         {
             ShopProductsService service = new ShopProductsService();
-            if (copiesNumber == 0 || copiesNumber > service.Read(productId).Copies) throw new Exception("Немає такої кількості товару");
+            if (copiesNumber <= 0 || copiesNumber > service.Read(productId).Copies) throw new Exception("Немає такої кількості товару");
             if (!service.Contains(productId)) throw new Exception("Товару з таким індексом немає");
 
             foreach (var element in ProductsCart)

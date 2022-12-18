@@ -13,7 +13,7 @@ namespace ShopSystem.UI
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(@"МАГАЗИН ""КАВА З ІМБИРОМ""" +
                 $"\nФінальна робота. Реалізація системи інтернет-магазину за принципами ООП"
-                + "\nТР-15 *-* *-*");
+                + "\nТР-15 Ткаченко Майя");
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.ReadKey();

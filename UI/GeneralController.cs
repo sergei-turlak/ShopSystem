@@ -65,6 +65,7 @@ namespace ShopSystem.UI
                     Console.WriteLine(@"МАГАЗИН ""КАВА З ІМБИРОМ""");
                     Console.WriteLine($"\nВи увійшли як {DBContext.User.Name}. На рахунку {DBContext.User.Balance} гривень\n");
                     Console.ForegroundColor = ConsoleColor.White;
+
                     ShowOptions();
                     Action();
                 }
